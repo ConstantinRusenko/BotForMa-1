@@ -1,6 +1,6 @@
-require '/home/madman/RoboRef/Database/DBorder'
-require '/home/madman/RoboRef/Database/DBtable'
-require '/home/madman/RoboRef/Telephone_checker'
+require './Database/DBorder'
+require './Database/DBtable'
+require './Telephone_checker'
 
 class Restourant1
 
@@ -82,7 +82,8 @@ def self.pizza(message, bot)
         Menu_button.main_menu(message, bot)
 
       when 'Карбонара'
-        Global.pizza = 'Карбонара'
+        Global.order_cart.push('Карбонара')
+        Global.pizza = 'Karbonara'
         Restourant1.pizza_quantity(message, bot)
 
       when '🔙Назад в меню'
@@ -114,42 +115,52 @@ def self.pizza_quantity(message, bot)
 
       when '1'
         Global.order_quantity = '1'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '2'
         Global.order_quantity = '2'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '3'
         Global.order_quantity = '3'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '4'
         Global.order_quantity = '4'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '5'
         Global.order_quantity = '5'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '6'
         Global.order_quantity = '6'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '7'
         Global.order_quantity = '7'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '8'
         Global.order_quantity = '8'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '9'
         Global.order_quantity = '9'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '10'
         Global.order_quantity = '10'
+        Global.order_cart.push(Global.order_quantity)
         Restourant1.last_step(message, bot)
 
       when '🔙Назад'
@@ -211,6 +222,7 @@ def self.order_confirmation(message, bot)
   text = 'Если все верно, жмите Принять заказ'
   buttons = [
     Telegram::Bot::Types::KeyboardButton.new(text: 'Принять заказ'),
+    Telegram::Bot::Types::KeyboardButton.new(text: 'Заказать еще'),
     Telegram::Bot::Types::KeyboardButton.new(text: 'Отменить заказ')
   ]
   markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
@@ -232,6 +244,10 @@ def self.order_confirmation(message, bot)
         DBorder.bd_input
         bot.api.send_message(chat_id: message.chat.id, text: 'Спасибо за заказик, мы скоро приедем =)')
         Menu_button.stop_button(message, bot)
+
+      when 'Заказать еще'
+        bot.api.send_message(chat_id: message.chat.id, text: "#{Global.order_cart}")
+        Restourant1.delivery(message, bot)
 
       when 'Отменить заказ'
         Global.client_name = nil
@@ -398,8 +414,9 @@ def self.time_confirmation(message, bot)
         Menu_button.main_menu(message, bot)
 
       when 'Да'
-        bot.api.send_message(chat_id: message.chat.id, text: "Ваш столик ждет вас на #{Global.order_table_time} часов =)", reply_markup: markup)
+        bot.api.send_message(chat_id: message.chat.id, text: "Ваш столик ждет вас на #{Global.order_table_time} и мы тоже =)", reply_markup: markup)
         DBtable.bd_input
+        Menu_button.stop_button(message, bot)
 
       when 'Нет'
         Restourant1.order_table(message, bot)

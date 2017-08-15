@@ -5,7 +5,7 @@ class DBorder
   def self.bd_input
 
     @username = Global.client_name
-    @quantity = Global.order_quantity
+    @quantity = Global.order_cart.join(', ')
     @pizza = Global.pizza
     @phone = Global.client_phone
     orderdate = Time.now
@@ -35,10 +35,3 @@ class DBorder
 
   end
 end
-
-
-
-
-
-
-

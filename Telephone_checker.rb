@@ -1,4 +1,5 @@
 class Telephone_checker
+
   def self.ukrainian_only(num)
     if /(\+380)([\d]{9})/.match num
       num = num.gsub('+38','')

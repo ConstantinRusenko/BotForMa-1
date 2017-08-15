@@ -11,10 +11,11 @@ module Global
                   :client_name,
                   :client_phone,
                   :order_quantity,
-                  :pizza
+                  :pizza,
+                  :order_cart
   end
 end
-
+  Global.order_cart = []
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|

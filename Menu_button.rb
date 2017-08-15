@@ -167,6 +167,6 @@ end
 
 def self.stop_button(message, bot)
   stop_button = Telegram::Bot::Types::ReplyKeyboardRemove.new(remove_keyboard: true)
-  bot.api.send_message(chat_id: message.chat.id, text: 'Для старта напишите /start', reply_markup: stop_button)
+  bot.api.send_message(chat_id: message.chat.id, text: 'Для заказа напишите /start', reply_markup: stop_button)
 end
 end

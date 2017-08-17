@@ -1,3 +1,5 @@
+require './Getuserinfo'
+
 class Telephone_checker
 
   def self.ukrainian_only(num)
@@ -27,8 +29,9 @@ class Telephone_checker
     )
       return num
 
+
     else
-      return 'num is not valid'
+      return '0'
     end
 
   end

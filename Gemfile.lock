@@ -52,7 +52,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     equalizer (0.0.11)
     erubi (1.6.1)
-    faraday (0.12.2)
+    faraday (0.13.0)
       multipart-post (>= 1.2, < 3)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -123,7 +123,7 @@ GEM
     telegram-bot-ruby (0.8.3)
       faraday
       virtus
-    thor (0.19.4)
+    thor (0.20.0)
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)

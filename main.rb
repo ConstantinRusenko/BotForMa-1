@@ -12,17 +12,18 @@ module Global
                   :client_phone,
                   :order_quantity,
                   :pizza,
-                  :order_cart
+                  :order_cart,
+                  :address,
+                  :restaurant
   end
 end
-  Global.order_cart = []
+Global.order_cart = []
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     case message.text
       when '/start'
-        Menu_button.main_menu(message, bot)
-
+        Menu_button.user_info(message, bot)
     end
   end
 end

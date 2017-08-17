@@ -4,9 +4,9 @@ class DBtable
 
   def self.bd_input
 
-    @username = "olezha"
+    @username = Global.client_name
     @restourant = "1"
-    @phone = "1"
+    @phone = Global.client_phone
     orderdate = Time.now
     @orderdate = orderdate.strftime("%H:%M-%d.%m.%Y")
     @time = Global.order_table_time
@@ -17,23 +17,21 @@ class DBtable
       "Users" (
           "id" Integer primary key autoincrement,
           "username" Text,
+          "restourant" Text,
           "phone" Text,
           "orderdate" Text,
           "time" Text,
-          "barber" Text,
-          "color" Text
       )'
 
     @db.execute( 'INSERT INTO
       Users (
           username,
+          restourant,
           phone,
           orderdate,
           time,
-          barber,
-          color
       )
-      VALUES ( ?, ?, ?, ?, ?, ?)', [@username, @phone, @orderdate, @time, @barber, @color])
+      VALUES ( ?, ?, ?, ?, ?)', [@username, @restourant, @phone, @orderdate, @time])
 
   end
 end

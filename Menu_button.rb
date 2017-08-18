@@ -10,13 +10,13 @@ def self.user_info(message, bot)
   no_but = Telegram::Bot::Types::ReplyKeyboardRemove.new(remove_keyboard: true)
   bot.api.send_message(chat_id: message.chat.id, text: 'Привет =)', reply_markup: no_but)
   Getuserinfo.get_client_name(message, bot)
-  bot.api.send_message(chat_id: message.chat.id, text: 'А теперь номер телефона, тоже для заказа =)')
+  bot.api.send_message(chat_id: message.chat.id, text: 'А телефончик? Тоже для заказа =)')
   Getuserinfo.get_client_phone(message, bot)
 
 end
 
 def self.main_menu(message, bot)
-
+  Global.order_cart = []
   text = 'Выбирай что хочешь =) Не стесняйся'
   buttons = [
     Telegram::Bot::Types::KeyboardButton.new(text: '🍝Итальянская кухня🍕'),
@@ -77,8 +77,7 @@ def self.ita_menu(message, bot)
         Menu_button.user_info(message, bot)
 
       when 'Restaurant1'
-        Restourant1.ita_menu_res_1(message, bot)
-
+        Restaurant1.menu_res(message, bot)
       when '🔙Назад в меню'
         Menu_button.main_menu(message, bot)
 
@@ -206,7 +205,7 @@ def self.all_menu(message, bot)
         Menu_button.user_info(message, bot)
 
       when 'Restaurant1'
-        Restaurant1.ita_menu_res_1(message, bot)
+        Restaurant1.menu_res(message, bot)
 
       when 'Farodelporto'
         Farodelporto.menu_res(message, bot)
@@ -221,6 +220,12 @@ end
 def self.stop_button(message, bot)
   stop_button = Telegram::Bot::Types::ReplyKeyboardRemove.new(remove_keyboard: true)
   bot.api.send_message(chat_id: message.chat.id, text: 'Для заказа напишите /start', reply_markup: stop_button)
+  Global.order_table_time = nil
+  Global.client_address = nil
+  Global.order_quantity = nil
+  Global.pizza = nil
+  Global.order_cart = []
+  Global.restaurant = nil
 end
 
 end

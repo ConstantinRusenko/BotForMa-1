@@ -48,7 +48,12 @@ class Getuserinfo
   end
 
   def self.get_client_address(message, bot)
-
+      bot.api.send_message(chat_id: message.chat.id, text: "Напишите пожалуйста на какую улицу приезжать)")
+      bot.listen do |message|
+        Global.client_address = message.text
+        bot.api.send_message(chat_id: message.chat.id, text: "Спасибо =)")
+      break
+    end
   end
 
 end

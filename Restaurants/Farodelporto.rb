@@ -41,6 +41,7 @@ class Farodelporto
   end
 
   def self.delivery(message, bot)
+
     text = 'Значит заказываем =)'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Пицца'),
@@ -66,14 +67,14 @@ class Farodelporto
       end
     end
   end
-
   def self.pizza(message, bot)
+
     text = 'Ууу піцца, вкусняшка'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Карбонара'),
       Telegram::Bot::Types::KeyboardButton.new(text: 'Диаволла'),
       Telegram::Bot::Types::KeyboardButton.new(text: 'Салями'),
-      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад в меню')
+      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
     ]
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
@@ -89,8 +90,8 @@ class Farodelporto
           Global.pizza = Global.order_cart
           Farodelporto.pizza_quantity(message, bot)
 
-        when '🔙Назад в меню'
-          Menu_button.main_menu(message, bot)
+        when '🔙Назад'
+          Farodelporto.delivery(message, bot)
 
       end
     end
@@ -98,6 +99,7 @@ class Farodelporto
 
 
   def self.pizza_quantity(message, bot)
+
     text = 'Количество пожалуйста'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: '1'), Telegram::Bot::Types::KeyboardButton.new(text: '2'),
@@ -174,6 +176,7 @@ class Farodelporto
   end
 
   def self.last_step(message, bot)
+
     text = 'Оформляем? Или еще что-то ?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Оформить заказ'),
@@ -194,10 +197,12 @@ class Farodelporto
           Farodelporto.delivery(message, bot)
 
         when 'Оформить заказ'
+          Getuserinfo.get_client_address(message, bot)
           Farodelporto.order_confirmation(message, bot)
 
 
         when 'Отменить заказ'
+          Global.restaurant = nil
           Global.pizza = nil
           Global.order_quantity = nil
           Global.order_cart = nil
@@ -210,7 +215,7 @@ class Farodelporto
 
 
   def self.order_confirmation(message, bot)
-    Global.address = "my address"
+
     text = 'Если все верно, жмите Принять заказ'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Принять заказ'),
@@ -223,7 +228,7 @@ class Farodelporto
 Ресторан: #{Global.restaurant}
 Имя: #{Global.client_name}
 Телефон: #{Global.client_phone}
-Адрес: #{Global.address}
+Адрес: #{Global.client_address}
 Заказ: #{Global.pizza.join(', ')}", reply_markup: markup)
 
     bot.listen do |message|
@@ -238,15 +243,18 @@ class Farodelporto
           Menu_button.stop_button(message, bot)
 
         when 'Отменить заказ'
+          Global.restaurant = nil
           Global.pizza = nil
           Global.order_quantity = nil
-          Farodelporto.pizza(message, bot)
+          Global.order_cart = nil
+          Menu_button.main_menu(message, bot)
 
       end
     end
   end
 
   def self.order_table(message, bot)
+
     text = 'На какое время?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: '11:00'), Telegram::Bot::Types::KeyboardButton.new(text: '11:30'),
@@ -385,6 +393,7 @@ class Farodelporto
   end
 
   def self.time_confirmation(message, bot)
+
     text = "на #{Global.order_table_time} ?"
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Да'),
@@ -400,16 +409,13 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when 'Да'
-          bot.api.send_message(chat_id: message.chat.id, text: "Ваш столик ждет вас на #{Global.order_table_time} и мы тоже =)", reply_markup: markup)
           DBtable.bd_input
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш столик ждет вас на #{Global.order_table_time} и мы тоже =)", reply_markup: markup)
           Menu_button.stop_button(message, bot)
 
         when 'Нет'
           Farodelporto.order_table(message, bot)
 
-
-        when '🔙Назад'
-          Farodelporto.pizza(message, bot)
 
       end
     end

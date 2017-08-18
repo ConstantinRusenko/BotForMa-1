@@ -1,12 +1,13 @@
 require './Database/DBorder'
 require './Database/DBtable'
 require './Getuserinfo'
+require './Parser'
 
 
 
 class Farodelporto
 
-  class << self;
+  class << self
     attr_accessor :table_11_13,
                   :table_14_16,
                   :table_17_19,
@@ -74,7 +75,7 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when 'Пицца'
-          Farodelporto.pizza(message, bot)
+          Button_cookery.faro_del_porto(message, bot)
 
         when '🔙Назад в меню'
           Menu_button.main_menu(message, bot)
@@ -82,15 +83,11 @@ class Farodelporto
       end
     end
   end
-  def self.pizza(message, bot)
+
+  def self.pizza(message, bot, buttons)
 
     text = 'Ууу піцца, вкусняшка'
-    buttons = [
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Карбонара'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Диаволла'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Салями'),
-      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
-    ]
+
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
@@ -184,7 +181,7 @@ class Farodelporto
           Farodelporto.last_step(message, bot)
 
         when '🔙Назад'
-          Farodelporto.pizza(message, bot)
+          Button_cookery.faro_del_porto(message, bot)
 
       end
     end
@@ -590,5 +587,6 @@ class Farodelporto
       end
     end
   end
+
 
 end

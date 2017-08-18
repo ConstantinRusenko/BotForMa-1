@@ -2,22 +2,21 @@ require './Database/DBorder'
 require './Database/DBtable'
 require './Getuserinfo'
 
-
-
 class Restaurant1
 
-  class << self;
+  class << self
     attr_accessor :table_11_13,
                   :table_14_16,
                   :table_17_19,
-                  :table_20_23
-
+                  :table_20_23,
+                  :likes
   end
 
   @table_11_13 = []
   @table_14_16 = []
   @table_17_19 = []
   @table_20_23 = []
+  @likes = []
 
   def self.menu_res(message, bot)
 
@@ -50,7 +49,6 @@ class Restaurant1
         when '🔙Назад в меню'
           Menu_button.main_menu(message, bot)
 
-
       end
     end
   end
@@ -82,6 +80,7 @@ class Restaurant1
       end
     end
   end
+
   def self.pizza(message, bot)
 
     text = 'Ууу піцца, вкусняшка'
@@ -111,7 +110,6 @@ class Restaurant1
       end
     end
   end
-
 
   def self.pizza_quantity(message, bot)
 
@@ -226,8 +224,6 @@ class Restaurant1
       end
     end
   end
-
-
 
   def self.order_confirmation(message, bot)
 
@@ -586,6 +582,44 @@ class Restaurant1
         when 'Нет'
           Restaurant1.order_table(message, bot)
 
+
+      end
+    end
+  end
+
+  def self.likes(message, bot)
+
+    text = 'Ууу піцца, вкусняшка'
+    buttons = [
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙❤️💜❤️💜💙'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙❤️💜💙'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙💜'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙️'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
+    ]
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+      case message.text
+
+        when '/start'
+          Menu_button.user_info(message, bot)
+
+        when '❤️💜💙❤️💜❤️💜💙'
+
+
+        when '❤️💜💙❤️💜💙'
+
+        when '❤️💜💙💜'
+
+        when '❤️💜💙️'
+
+        when '❤️💜'
+
+        when '🔙Назад'
+          Restaurant1.menu_res(message, bot)
 
       end
     end

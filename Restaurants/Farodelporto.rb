@@ -2,7 +2,22 @@ require './Database/DBorder'
 require './Database/DBtable'
 require './Getuserinfo'
 
+
+
 class Farodelporto
+
+  class << self;
+    attr_accessor :table_11_13,
+                  :table_14_16,
+                  :table_17_19,
+                  :table_20_23
+
+  end
+
+  @table_11_13 = []
+  @table_14_16 = []
+  @table_17_19 = []
+  @table_20_23 = []
 
   def self.menu_res(message, bot)
 
@@ -254,7 +269,6 @@ class Farodelporto
   end
 
   def self.order_table(message, bot)
-
     text = 'На какое время?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: '11:00'), Telegram::Bot::Types::KeyboardButton.new(text: '11:30'),
@@ -282,108 +296,264 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when '11:00'
-          Global.order_table_time = '11:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '11:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '11:30'
-          Global.order_table_time = '11:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '11:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '12:00'
-          Global.order_table_time = '12:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '12:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '12:30'
-          Global.order_table_time = '12:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '12:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '13:00'
-          Global.order_table_time = '13:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '13:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '13:30'
-          Global.order_table_time = '13:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_11_13.length <= 3
+            Farodelporto.table_11_13.push('1')
+            Global.order_table_time = '13:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '14:00'
-          Global.order_table_time = '14:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '14:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '14:30'
-          Global.order_table_time = '14:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '14:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '15:00'
-          Global.order_table_time = '15:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '15:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '15:30'
-          Global.order_table_time = '15:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '15:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '16:00'
-          Global.order_table_time = '16:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '16:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '16:30'
-          Global.order_table_time = '16:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_14_16.length <= 3
+            Farodelporto.table_14_16.push('1')
+            Global.order_table_time = '16:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '17:00'
-          Global.order_table_time = '17:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '17:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '17:30'
-          Global.order_table_time = '17:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '17:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '18:00'
-          Global.order_table_time = '18:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '18:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '18:30'
-          Global.order_table_time = '18:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '18:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '19:00'
-          Global.order_table_time = '19:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '19:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '19:30'
-          Global.order_table_time = '19:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_17_19.length <= 3
+            Farodelporto.table_17_19.push('1')
+            Global.order_table_time = '19:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '20:00'
-          Global.order_table_time = '20:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '20:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '20:30'
-          Global.order_table_time = '20:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '20:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '21:00'
-          Global.order_table_time = '21:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '21:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '21:30'
-          Global.order_table_time = '21:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '21:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '22:00'
-          Global.order_table_time = '22:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '22:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '22:30'
-          Global.order_table_time = '22:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '22:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '23:00'
-          Global.order_table_time = '23:00'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '23:00'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '23:30'
-          Global.order_table_time = '23:30'
-          Farodelporto.time_confirmation(message, bot)
+          if Farodelporto.table_20_23.length <= 3
+            Farodelporto.table_20_23.push('1')
+            Global.order_table_time = '23:30'
+            Farodelporto.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Farodelporto.order_table(message, bot)
+          end
 
         when '🔙Назад'
           Farodelporto.menu_res(message, bot)

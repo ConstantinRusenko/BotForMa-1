@@ -19,6 +19,7 @@ module Global
 end
 Global.order_cart = []
 
+
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     case message.text

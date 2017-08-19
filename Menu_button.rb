@@ -31,6 +31,8 @@ def self.main_menu(message, bot)
 
   bot.listen do |message|
 
+    Live_communication.list(message, bot)
+
     case message.text
 
       when '/start'
@@ -71,6 +73,8 @@ def self.ita_menu(message, bot)
   bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
   bot.listen do |message|
+
+    Live_communication.list(message, bot)
     case message.text
 
       when '/start'
@@ -99,6 +103,8 @@ def self.jap_menu(message, bot)
 
   bot.listen do |message|
 
+    Live_communication.list(message, bot)
+
     case message.text
 
       when '/start'
@@ -123,6 +129,8 @@ def self.geo_menu(message, bot)
   bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
   bot.listen do |message|
+
+    Live_communication.list(message, bot)
 
     case message.text
 
@@ -149,6 +157,8 @@ def self.ukr_menu(message, bot)
 
   bot.listen do |message|
 
+    Live_communication.list(message, bot)
+
     case message.text
 
       when '/start'
@@ -174,6 +184,8 @@ def self.ger_menu(message, bot)
 
   bot.listen do |message|
 
+    Live_communication.list(message, bot)
+
     case message.text
 
       when '/start'
@@ -198,6 +210,8 @@ def self.all_menu(message, bot)
   bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
   bot.listen do |message|
+
+    Live_communication.list(message, bot)
 
     case message.text
 

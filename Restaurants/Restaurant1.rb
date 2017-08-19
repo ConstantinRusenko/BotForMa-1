@@ -1,6 +1,7 @@
 require './Database/DBorder'
 require './Database/DBtable'
 require './Getuserinfo'
+require './Livecom'
 
 class Restaurant1
 
@@ -27,12 +28,19 @@ class Restaurant1
       Telegram::Bot::Types::KeyboardButton.new(text: '📦Доставка🛵'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🕯Заказать столик📝'),
       Telegram::Bot::Types::KeyboardButton.new(text: '💙Отзывы💜'),
+      Telegram::Bot::Types::KeyboardButton.new(text: 'Где нас найти?'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад в меню')
     ]
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+
+
+
       case message.text
 
         when '/start'
@@ -46,6 +54,10 @@ class Restaurant1
 
         when '💙Отзывы💜'
 
+        when 'Где нас найти?'
+          bot.api.send_location(chat_id: message.chat.id, latitude: 49.4382227, longitude: 32.0983896)
+
+
         when '🔙Назад в меню'
           Menu_button.main_menu(message, bot)
 
@@ -54,6 +66,8 @@ class Restaurant1
   end
 
   def self.delivery(message, bot)
+
+
 
     text = 'Значит заказываем =)'
     buttons = [
@@ -66,6 +80,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -83,6 +100,8 @@ class Restaurant1
 
   def self.pizza(message, bot)
 
+
+
     text = 'Ууу піцца, вкусняшка'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Карбонара'),
@@ -94,6 +113,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -126,6 +148,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -190,6 +215,8 @@ class Restaurant1
 
   def self.last_step(message, bot)
 
+
+
     text = 'Оформляем? Или еще что-то ?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Оформить заказ'),
@@ -200,6 +227,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -227,6 +257,8 @@ class Restaurant1
 
   def self.order_confirmation(message, bot)
 
+
+
     text = 'Если все верно, жмите Принять заказ'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Принять заказ'),
@@ -243,6 +275,9 @@ class Restaurant1
 Заказ: #{Global.pizza.join(', ')}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -265,6 +300,9 @@ class Restaurant1
   end
 
   def self.order_table(message, bot)
+
+
+
     text = 'На какое время?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: '11:00'), Telegram::Bot::Types::KeyboardButton.new(text: '11:30'),
@@ -286,6 +324,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -492,14 +533,14 @@ class Restaurant1
           end
 
         when '21:00'
-            if Restaurant1.table_20_23.length <= 3
-              Restaurant1.table_20_23.push('1')
-              Global.order_table_time = '21:00'
-              Restaurant1.time_confirmation(message, bot)
-            else
-              bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-              Restaurant1.order_table(message, bot)
-            end
+          if Restaurant1.table_20_23.length <= 3
+            Restaurant1.table_20_23.push('1')
+            Global.order_table_time = '21:00'
+            Restaurant1.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Restaurant1.order_table(message, bot)
+          end
 
         when '21:30'
           if Restaurant1.table_20_23.length <= 3
@@ -560,6 +601,8 @@ class Restaurant1
 
   def self.time_confirmation(message, bot)
 
+
+
     text = "на #{Global.order_table_time} ?"
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Да'),
@@ -569,6 +612,9 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
@@ -587,7 +633,7 @@ class Restaurant1
     end
   end
 
-  def self.likes(message, bot)
+  def self.res_likes(message, bot)
 
     text = 'Ууу піцца, вкусняшка'
     buttons = [
@@ -602,21 +648,28 @@ class Restaurant1
     bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
 
     bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
       case message.text
 
         when '/start'
           Menu_button.user_info(message, bot)
 
         when '❤️💜💙❤️💜❤️💜💙'
-
+          Restaurant1.likes.push('5')
 
         when '❤️💜💙❤️💜💙'
+          Restaurant1.likes.push('4')
 
         when '❤️💜💙💜'
+          Restaurant1.likes.push('3')
 
         when '❤️💜💙️'
+          Restaurant1.likes.push('2')
 
         when '❤️💜'
+          Restaurant1.likes.push('1')
 
         when '🔙Назад'
           Restaurant1.menu_res(message, bot)

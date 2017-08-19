@@ -237,7 +237,6 @@ def self.stop_button(message, bot)
   Global.order_table_time = nil
   Global.client_address = nil
   Global.order_quantity = nil
-  Global.pizza = nil
   Global.order_cart = []
   Global.restaurant = nil
 end

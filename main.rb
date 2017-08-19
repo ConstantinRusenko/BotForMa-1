@@ -12,13 +12,13 @@ module Global
                   :client_phone,
                   :client_address,
                   :order_quantity,
-                  :pizza,
+                  :client_st_name,
+                  :client_st_num,
                   :order_cart,
                   :restaurant
   end
 end
 Global.order_cart = []
-
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
@@ -30,7 +30,6 @@ Telegram::Bot::Client.run(token) do |bot|
         Global.client_phone = nil
         Global.client_address = nil
         Global.order_quantity = nil
-        Global.pizza = nil
         Global.order_cart = []
         Global.restaurant = nil
     end

@@ -1,4 +1,5 @@
 require './Telephone_checker'
+require './Address_checker'
 
 class Getuserinfo
 
@@ -48,12 +49,30 @@ class Getuserinfo
   end
 
   def self.get_client_address(message, bot)
-      bot.api.send_message(chat_id: message.chat.id, text: "Напишите пожалуйста на какую улицу приезжать)")
-      bot.listen do |message|
-        Global.client_address = message.text
-        bot.api.send_message(chat_id: message.chat.id, text: "Спасибо =)")
+      Getuserinfo.get_client_st_name(message, bot)
+      Getuserinfo.get_client_st_num(message, bot)
+        if Address_checker.url(Global.client_st_name, Global.client_st_num) == "Есть такая улица"
+          bot.api.send_message(chat_id: message.chat.id, text: "Спасибо =)")
+          Global.client_address = Global.client_st_name + ', ' + Global.client_st_num
+        else
+          bot.api.send_message(chat_id: message.chat.id, text: "Мы не нашли такой улицы =( введите заново пожалуйста")
+          Getuserinfo.get_client_address(message, bot)
+        end
+  end
+
+  def self.get_client_st_name(message, bot)
+    bot.api.send_message(chat_id: message.chat.id, text: "Напишите пожалуйста название улицы без номерка)")
+    bot.listen do |message|
+      Global.client_st_name = message.text
       break
     end
   end
 
+  def self.get_client_st_num(message, bot)
+    bot.api.send_message(chat_id: message.chat.id, text: "А теперь номерок улицы =)")
+    bot.listen do |message|
+      Global.client_st_num = message.text
+      break
+    end
+  end
 end

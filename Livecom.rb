@@ -42,4 +42,4 @@ class Live_communication
 end
 
 
-#bot.api.send_location(chat_id: message.chat.id, latitude: -37.807416, longitude: 144.985339)
+#bot.api.send_location(chat_id: message.chat.id, latitude: 111, longitude: 1111)

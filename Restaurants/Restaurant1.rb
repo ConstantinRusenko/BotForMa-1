@@ -10,14 +10,22 @@ class Restaurant1
                   :table_14_16,
                   :table_17_19,
                   :table_20_23,
-                  :likes
+                  :likes5,
+                  :likes4,
+                  :likes3,
+                  :likes2,
+                  :likes1
   end
 
   @table_11_13 = []
   @table_14_16 = []
   @table_17_19 = []
   @table_20_23 = []
-  @likes = []
+  @likes5 = []
+  @likes4 = []
+  @likes3 = []
+  @likes2 = []
+  @likes1 = []
 
   def self.menu_res(message, bot)
 
@@ -28,7 +36,7 @@ class Restaurant1
       Telegram::Bot::Types::KeyboardButton.new(text: '📦Доставка🛵'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🕯Заказать столик📝'),
       Telegram::Bot::Types::KeyboardButton.new(text: '💙Отзывы💜'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Где нас найти?'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❓Где нас найти?❓'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад в меню')
     ]
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
@@ -53,9 +61,11 @@ class Restaurant1
           Restaurant1.order_table(message, bot)
 
         when '💙Отзывы💜'
+          Restaurant1.res_likes(message, bot)
 
-        when 'Где нас найти?'
-          bot.api.send_location(chat_id: message.chat.id, latitude: 49.4382227, longitude: 32.0983896)
+        when '❓Где нас найти?❓'
+          bot.api.send_location(chat_id: message.chat.id, latitude: 49.438237, longitude: 32.098387)
+          Restaurant1.menu_res(message, bot)
 
 
         when '🔙Назад в меню'
@@ -66,8 +76,6 @@ class Restaurant1
   end
 
   def self.delivery(message, bot)
-
-
 
     text = 'Значит заказываем =)'
     buttons = [
@@ -123,7 +131,6 @@ class Restaurant1
 
         when 'Карбонара'
           Global.order_cart.push('Карбонара')
-          Global.pizza = Global.order_cart
           Restaurant1.pizza_quantity(message, bot)
 
         when '🔙Назад'
@@ -159,51 +166,61 @@ class Restaurant1
         when '1'
           Global.order_quantity = '1'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '2'
           Global.order_quantity = '2'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '3'
           Global.order_quantity = '3'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '4'
           Global.order_quantity = '4'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '5'
           Global.order_quantity = '5'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '6'
           Global.order_quantity = '6'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '7'
           Global.order_quantity = '7'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '8'
           Global.order_quantity = '8'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '9'
           Global.order_quantity = '9'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '10'
           Global.order_quantity = '10'
           Global.order_cart.push(Global.order_quantity)
+          bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
           Restaurant1.last_step(message, bot)
 
         when '🔙Назад'
@@ -236,7 +253,6 @@ class Restaurant1
           Menu_button.user_info(message, bot)
 
         when 'Заказать еще'
-          bot.api.send_message(chat_id: message.chat.id, text: "Запомню это, вдруг пригодяться) #{Global.order_cart.join(', ')}")
           Restaurant1.delivery(message, bot)
 
         when 'Оформить заказ'
@@ -246,7 +262,6 @@ class Restaurant1
 
         when 'Отменить заказ'
           Global.restaurant = nil
-          Global.pizza = nil
           Global.order_quantity = nil
           Global.order_cart = nil
           Menu_button.main_menu(message, bot)
@@ -272,7 +287,7 @@ class Restaurant1
 Имя: #{Global.client_name}
 Телефон: #{Global.client_phone}
 Адрес: #{Global.client_address}
-Заказ: #{Global.pizza.join(', ')}", reply_markup: markup)
+Заказ: #{Global.order_cart.join(', ')}", reply_markup: markup)
 
     bot.listen do |message|
 
@@ -290,7 +305,6 @@ class Restaurant1
 
         when 'Отменить заказ'
           Global.restaurant = nil
-          Global.pizza = nil
           Global.order_quantity = nil
           Global.order_cart = nil
           Menu_button.main_menu(message, bot)
@@ -637,11 +651,11 @@ class Restaurant1
 
     text = 'Ууу піцца, вкусняшка'
     buttons = [
-      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙❤️💜❤️💜💙'),
-      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙❤️💜💙'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙❤️💜'),
       Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙💜'),
       Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜💙️'),
-      Telegram::Bot::Types::KeyboardButton.new(text: '❤️💜'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️❤️'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '❤️'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
     ]
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
@@ -656,20 +670,30 @@ class Restaurant1
         when '/start'
           Menu_button.user_info(message, bot)
 
-        when '❤️💜💙❤️💜❤️💜💙'
-          Restaurant1.likes.push('5')
-
-        when '❤️💜💙❤️💜💙'
-          Restaurant1.likes.push('4')
+        when '❤️💜💙❤️💜'
+          Restaurant1.likes5.push('5')
+          bot.api.send_message(chat_id: message.chat.id, text: 'О да, мы настолько хороши =) Спасибо вам')
+          Restaurant1.menu_res(message, bot)
 
         when '❤️💜💙💜'
-          Restaurant1.likes.push('3')
+          Restaurant1.likes4.push('4')
+          bot.api.send_message(chat_id: message.chat.id, text: 'Почти 5 =) Спасибки')
+          Restaurant1.menu_res(message, bot)
 
         when '❤️💜💙️'
-          Restaurant1.likes.push('2')
+          Restaurant1.likes3.push('3')
+          bot.api.send_message(chat_id: message.chat.id, text: 'Триппл =)')
+          Restaurant1.menu_res(message, bot)
 
-        when '❤️💜'
-          Restaurant1.likes.push('1')
+        when '❤️❤️'
+          Restaurant1.likes2.push('2')
+          bot.api.send_message(chat_id: message.chat.id, text: 'Мы будем стараться лучше =) ')
+          Restaurant1.menu_res(message, bot)
+
+        when '❤️'
+          Restaurant1.likes1.push('1')
+          bot.api.send_message(chat_id: message.chat.id, text: 'Кажеться нам нужно очень сильно стараться =(')
+          Restaurant1.menu_res(message, bot)
 
         when '🔙Назад'
           Restaurant1.menu_res(message, bot)

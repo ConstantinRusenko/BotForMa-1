@@ -1,7 +1,7 @@
 require 'net/http'
 require 'json'
 
-class Add
+class Address_checker
 
   def self.url(street, number)
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=украина,черкассы,#{street},#{number}&key=AIzaSyDEhIhQZ_Nr-gSrnL9eNT-YM6nHF2YECbM"
@@ -10,9 +10,9 @@ class Add
     response = Net::HTTP.get(uri)
     JSON.parse(response)
     if response.include? "ZERO_RESULTS"
-      puts "Нет такой улицы"
+      return "Нет такой улицы"
     else
-      puts "Есть такая улица"
+      return "Есть такая улица"
     end
   end
 
@@ -26,4 +26,4 @@ class Add
   end
 
 end
-#Add.url("сметанки", 7)
+#Address_checker.url("Дружбы", 7)

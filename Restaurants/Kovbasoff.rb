@@ -3,7 +3,7 @@ require './Database/DBtable'
 require './Getuserinfo'
 require './Livecom'
 
-class Farodelporto
+class Kovbasoff
 
   class << self
     attr_accessor :table_11_13,
@@ -29,7 +29,7 @@ class Farodelporto
 
   def self.menu_res(message, bot)
 
-    Global.restaurant = "Farodelporto"
+    Global.restaurant = "Ковбасофф"
 
     text = 'Вы к нам или мы к вам ?'
     buttons = [
@@ -52,17 +52,17 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when '📦Доставка🛵'
-          Farodelporto.delivery(message, bot)
+          Kovbasoff.delivery(message, bot)
 
         when '🕯Заказать столик📝'
-          Farodelporto.order_table_day(message, bot)
+          Kovbasoff.order_table_day(message, bot)
 
         when '💙Отзывы💜'
-          Farodelporto.res_likes(message, bot)
+          Kovbasoff.res_likes(message, bot)
 
         when '❓Где нас найти?❓'
           bot.api.send_location(chat_id: message.chat.id, latitude: 49.438237, longitude: 32.098387)
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
 
         when '🔙Назад в меню'
@@ -94,7 +94,7 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when 'Пицца'
-          Farodelporto.pizza(message, bot)
+          Kovbasoff.pizza(message, bot)
 
         when '🔙Назад в меню'
           Menu_button.main_menu(message, bot)
@@ -126,10 +126,10 @@ class Farodelporto
 
         when 'Карбонара'
           Global.order_cart.push('Карбонара')
-          Farodelporto.pizza_quantity(message, bot)
+          Kovbasoff.pizza_quantity(message, bot)
 
         when '🔙Назад'
-          Farodelporto.delivery(message, bot)
+          Kovbasoff.delivery(message, bot)
 
       end
     end
@@ -162,64 +162,64 @@ class Farodelporto
           Global.order_quantity = '1'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '2'
           Global.order_quantity = '2'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '3'
           Global.order_quantity = '3'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '4'
           Global.order_quantity = '4'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '5'
           Global.order_quantity = '5'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '6'
           Global.order_quantity = '6'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '7'
           Global.order_quantity = '7'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '8'
           Global.order_quantity = '8'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '9'
           Global.order_quantity = '9'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '10'
           Global.order_quantity = '10'
           Global.order_cart.push(Global.order_quantity)
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш заказик: #{Global.order_cart.join(', ')}")
-          Farodelporto.last_step(message, bot)
+          Kovbasoff.last_step(message, bot)
 
         when '🔙Назад'
-          Farodelporto.pizza(message, bot)
+          Kovbasoff.pizza(message, bot)
 
       end
     end
@@ -246,11 +246,11 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when 'Заказать еще'
-          Farodelporto.delivery(message, bot)
+          Kovbasoff.delivery(message, bot)
 
         when 'Оформить заказ'
           Getuserinfo.get_client_address(message, bot)
-          Farodelporto.order_confirmation(message, bot)
+          Kovbasoff.order_confirmation(message, bot)
 
         when 'Отменить заказ'
           Global.restaurant = nil
@@ -346,37 +346,37 @@ class Farodelporto
           date = "#{month}" + "29/" + "#{year}"
           if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
             bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
-            Farodelporto.order_table_day(message, bot)
+            Kovbasoff.order_table_day(message, bot)
           else
             Global.order_table_day = message.text
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '30'
           date = "#{month}/" + "30/" + "#{year}"
           if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
             bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
-            Farodelporto.order_table_day(message, bot)
+            Kovbasoff.order_table_day(message, bot)
           else
             Global.order_table_day = message.text
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '31'
           date = "#{month}/" + "31/" + "#{year}"
           if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
             bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
-            Farodelporto.order_table_day(message, bot)
+            Kovbasoff.order_table_day(message, bot)
           else
             Global.order_table_day = message.text
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
       end
 
       if b_reaction_arr.include?(message.text)
         Global.order_table_day = message.text
-        Farodelporto.order_table_time(message, bot)
+        Kovbasoff.order_table_time(message, bot)
       else
         bot.api.send_message(chat_id: message.chat.id, text: 'нет такого дня ')
       end
@@ -417,292 +417,292 @@ class Farodelporto
 
         when '11:00'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '11:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '11:30'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '11:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '12:00'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '12:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '12:30'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '12:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '13:00'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '13:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '13:30'
 
-          if Farodelporto.table_11_13.length <= 3
-            Farodelporto.table_11_13.push('1')
+          if Kovbasoff.table_11_13.length <= 3
+            Kovbasoff.table_11_13.push('1')
             Global.order_table_time = '13:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '14:00'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '14:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '14:30'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '14:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '15:00'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '15:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '15:30'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '15:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '16:00'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '16:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '16:30'
 
-          if Farodelporto.table_14_16.length <= 3
-            Farodelporto.table_14_16.push('1')
+          if Kovbasoff.table_14_16.length <= 3
+            Kovbasoff.table_14_16.push('1')
             Global.order_table_time = '16:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '17:00'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '17:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '17:30'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '17:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '18:00'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '18:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '18:30'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '18:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '19:00'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '19:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '19:30'
 
-          if Farodelporto.table_17_19.length <= 3
-            Farodelporto.table_17_19.push('1')
+          if Kovbasoff.table_17_19.length <= 3
+            Kovbasoff.table_17_19.push('1')
             Global.order_table_time = '19:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '20:00'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '20:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '20:30'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '20:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '21:00'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '21:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '21:30'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '21:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '22:00'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '22:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '22:30'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '22:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '23:00'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '23:00'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '23:30'
 
-          if Farodelporto.table_20_23.length <= 3
-            Farodelporto.table_20_23.push('1')
+          if Kovbasoff.table_20_23.length <= 3
+            Kovbasoff.table_20_23.push('1')
             Global.order_table_time = '23:30'
-            Farodelporto.time_confirmation(message, bot)
+            Kovbasoff.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Farodelporto.order_table_time(message, bot)
+            Kovbasoff.order_table_time(message, bot)
           end
 
         when '🔙Назад'
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
       end
     end
@@ -733,7 +733,7 @@ class Farodelporto
           Menu_button.stop_button(message, bot)
 
         when 'Нет'
-          Farodelporto.order_table_day(message, bot)
+          Kovbasoff.order_table_day(message, bot)
 
 
       end
@@ -764,32 +764,32 @@ class Farodelporto
           Menu_button.user_info(message, bot)
 
         when '❤️💜💙❤️💜'
-          Farodelporto.likes5.push('5')
+          Kovbasoff.likes5.push('5')
           bot.api.send_message(chat_id: message.chat.id, text: 'О да, мы настолько хороши =) Спасибо вам')
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
         when '❤️💜💙💜'
-          Farodelporto.likes4.push('4')
+          Kovbasoff.likes4.push('4')
           bot.api.send_message(chat_id: message.chat.id, text: 'Почти 5 =) Спасибки')
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
         when '❤️💜💙️'
-          Farodelporto.likes3.push('3')
+          Kovbasoff.likes3.push('3')
           bot.api.send_message(chat_id: message.chat.id, text: 'Триппл =)')
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
         when '❤️❤️'
-          Farodelporto.likes2.push('2')
+          Kovbasoff.likes2.push('2')
           bot.api.send_message(chat_id: message.chat.id, text: 'Мы будем стараться лучше =) ')
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
         when '❤️'
-          Farodelporto.likes1.push('1')
+          Kovbasoff.likes1.push('1')
           bot.api.send_message(chat_id: message.chat.id, text: 'Кажеться нам нужно очень сильно стараться =(')
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
         when '🔙Назад'
-          Farodelporto.menu_res(message, bot)
+          Kovbasoff.menu_res(message, bot)
 
       end
     end

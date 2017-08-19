@@ -26,4 +26,4 @@ class Address_checker
   end
 
 end
-#Address_checker.url("Дружбы", 7)
+puts Address_checker.url("зфвп", 7)

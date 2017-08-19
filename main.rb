@@ -8,6 +8,7 @@ module Global
 
   class << self
     attr_accessor :order_table_time,
+                  :order_table_day,
                   :client_name,
                   :client_phone,
                   :client_address,

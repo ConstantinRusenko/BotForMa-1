@@ -46,9 +46,6 @@ class Restaurant1
 
       Live_communication.list(message, bot)
 
-
-
-
       case message.text
 
         when '/start'
@@ -58,7 +55,7 @@ class Restaurant1
           Restaurant1.delivery(message, bot)
 
         when '🕯Заказать столик📝'
-          Restaurant1.order_table(message, bot)
+          Restaurant1.order_table_day(message, bot)
 
         when '💙Отзывы💜'
           Restaurant1.res_likes(message, bot)
@@ -107,8 +104,6 @@ class Restaurant1
   end
 
   def self.pizza(message, bot)
-
-
 
     text = 'Ууу піцца, вкусняшка'
     buttons = [
@@ -232,8 +227,6 @@ class Restaurant1
 
   def self.last_step(message, bot)
 
-
-
     text = 'Оформляем? Или еще что-то ?'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Оформить заказ'),
@@ -259,7 +252,6 @@ class Restaurant1
           Getuserinfo.get_client_address(message, bot)
           Restaurant1.order_confirmation(message, bot)
 
-
         when 'Отменить заказ'
           Global.restaurant = nil
           Global.order_quantity = nil
@@ -271,8 +263,6 @@ class Restaurant1
   end
 
   def self.order_confirmation(message, bot)
-
-
 
     text = 'Если все верно, жмите Принять заказ'
     buttons = [
@@ -313,9 +303,88 @@ class Restaurant1
     end
   end
 
-  def self.order_table(message, bot)
+  def self.order_table_day(message, bot)
 
+    b_reaction_arr = 1..28
+    b_reaction_arr = b_reaction_arr.to_a
+    b_reaction_arr = b_reaction_arr.to_s
 
+    text = 'На какое число?'
+    buttons = [
+      Telegram::Bot::Types::KeyboardButton.new(text: '1'),  Telegram::Bot::Types::KeyboardButton.new(text: '2' ),
+      Telegram::Bot::Types::KeyboardButton.new(text: '3'),  Telegram::Bot::Types::KeyboardButton.new(text: '4'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '5'),  Telegram::Bot::Types::KeyboardButton.new(text: '6'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '7'),  Telegram::Bot::Types::KeyboardButton.new(text: '8'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '9'),  Telegram::Bot::Types::KeyboardButton.new(text: '10'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '11'), Telegram::Bot::Types::KeyboardButton.new(text: '12'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '13'), Telegram::Bot::Types::KeyboardButton.new(text: '14'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '15'), Telegram::Bot::Types::KeyboardButton.new(text: '16'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '17'), Telegram::Bot::Types::KeyboardButton.new(text: '18'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '19'), Telegram::Bot::Types::KeyboardButton.new(text: '20'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '21'), Telegram::Bot::Types::KeyboardButton.new(text: '22'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '23'), Telegram::Bot::Types::KeyboardButton.new(text: '24'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '25'), Telegram::Bot::Types::KeyboardButton.new(text: '26'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '27'), Telegram::Bot::Types::KeyboardButton.new(text: '28'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '29'), Telegram::Bot::Types::KeyboardButton.new(text: '30'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '31'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
+    ]
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+      time = Time.now
+      month = time.strftime("%m")
+      year = time.strftime("%Y")
+
+      case message.text
+
+        when '29'
+          date = "#{month}" + "29/" + "#{year}"
+          if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
+            bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
+            Restaurant1.order_table_day(message, bot)
+          else
+            Global.order_table_day = message.text
+            Restaurant1.order_table_time(message, bot)
+          end
+
+        when '30'
+          date = "#{month}/" + "30/" + "#{year}"
+          if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
+            bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
+            Restaurant1.order_table_day(message, bot)
+          else
+            Global.order_table_day = message.text
+            Restaurant1.order_table_time(message, bot)
+          end
+
+        when '31'
+          date = "#{month}/" + "31/" + "#{year}"
+          if  !/((02\/[0-2]\d)|((01|[0][3-9]|[1][0-2])\/(31|30|[0-2]\d)))\/[12]\d{3}/.match(date)
+            bot.api.send_message(chat_id: message.chat.id, text: "В этом месяце нет такого дня", reply_markup: markup)
+            Restaurant1.order_table_day(message, bot)
+          else
+            Global.order_table_day = message.text
+            Restaurant1.order_table_time(message, bot)
+          end
+
+      end
+
+      if b_reaction_arr.include?(message.text)
+        Global.order_table_day = message.text
+        Restaurant1.order_table_time(message, bot)
+      else
+        bot.api.send_message(chat_id: message.chat.id, text: 'нет такого дня ')
+      end
+
+    end
+  end
+
+  def self.order_table_time(message, bot)
 
     text = 'На какое время?'
     buttons = [
@@ -347,263 +416,289 @@ class Restaurant1
           Menu_button.user_info(message, bot)
 
         when '11:00'
+
           if Restaurant1.table_11_13.length <= 3
-             Restaurant1.table_11_13.push('1')
-             Global.order_table_time = '11:00'
-             Restaurant1.time_confirmation(message, bot)
+            Restaurant1.table_11_13.push('1')
+            Global.order_table_time = '11:00'
+            Restaurant1.time_confirmation(message, bot)
           else
-             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-             Restaurant1.order_table(message, bot)
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '11:30'
+
           if Restaurant1.table_11_13.length <= 3
-             Restaurant1.table_11_13.push('1')
-             Global.order_table_time = '11:30'
-             Restaurant1.time_confirmation(message, bot)
+            Restaurant1.table_11_13.push('1')
+            Global.order_table_time = '11:30'
+            Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '12:00'
+
           if Restaurant1.table_11_13.length <= 3
             Restaurant1.table_11_13.push('1')
             Global.order_table_time = '12:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '12:30'
+
           if Restaurant1.table_11_13.length <= 3
             Restaurant1.table_11_13.push('1')
             Global.order_table_time = '12:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '13:00'
+
           if Restaurant1.table_11_13.length <= 3
             Restaurant1.table_11_13.push('1')
             Global.order_table_time = '13:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
-            when '13:30'
-            if Restaurant1.table_11_13.length <= 3
-              Restaurant1.table_11_13.push('1')
-              Global.order_table_time = '13:30'
-              Restaurant1.time_confirmation(message, bot)
-            else
-              bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-              Restaurant1.order_table(message, bot)
-            end
+        when '13:30'
+
+          if Restaurant1.table_11_13.length <= 3
+            Restaurant1.table_11_13.push('1')
+            Global.order_table_time = '13:30'
+            Restaurant1.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Restaurant1.order_table_time(message, bot)
+          end
 
         when '14:00'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
             Global.order_table_time = '14:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '14:30'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
             Global.order_table_time = '14:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '15:00'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
             Global.order_table_time = '15:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '15:30'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
-          Global.order_table_time = '15:30'
-          Restaurant1.time_confirmation(message, bot)
+            Global.order_table_time = '15:30'
+            Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '16:00'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
-          Global.order_table_time = '16:00'
-          Restaurant1.time_confirmation(message, bot)
-        else
-          bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-          Restaurant1.order_table(message, bot)
+            Global.order_table_time = '16:00'
+            Restaurant1.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '16:30'
+
           if Restaurant1.table_14_16.length <= 3
             Restaurant1.table_14_16.push('1')
-          Global.order_table_time = '16:30'
-          Restaurant1.time_confirmation(message, bot)
-        else
-        bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-        Restaurant1.order_table(message, bot)
+            Global.order_table_time = '16:30'
+            Restaurant1.time_confirmation(message, bot)
+          else
+            bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '17:00'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '17:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '17:30'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '17:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '18:00'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '18:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '18:30'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '18:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '19:00'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '19:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '19:30'
+
           if Restaurant1.table_17_19.length <= 3
             Restaurant1.table_17_19.push('1')
             Global.order_table_time = '19:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '20:00'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '20:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '20:30'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '20:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '21:00'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '21:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '21:30'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '21:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '22:00'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '22:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '22:30'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '22:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '23:00'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '23:00'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '23:30'
+
           if Restaurant1.table_20_23.length <= 3
             Restaurant1.table_20_23.push('1')
             Global.order_table_time = '23:30'
             Restaurant1.time_confirmation(message, bot)
           else
             bot.api.send_message(chat_id: message.chat.id, text: 'Свободных нет, может есть на другое время')
-            Restaurant1.order_table(message, bot)
+            Restaurant1.order_table_time(message, bot)
           end
 
         when '🔙Назад'
@@ -615,9 +710,7 @@ class Restaurant1
 
   def self.time_confirmation(message, bot)
 
-
-
-    text = "на #{Global.order_table_time} ?"
+    text = "На #{Global.order_table_day} число #{Global.order_table_time} ?"
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Да'),
       Telegram::Bot::Types::KeyboardButton.new(text: 'Нет')
@@ -640,7 +733,7 @@ class Restaurant1
           Menu_button.stop_button(message, bot)
 
         when 'Нет'
-          Restaurant1.order_table(message, bot)
+          Restaurant1.order_table_day(message, bot)
 
 
       end
@@ -701,5 +794,4 @@ class Restaurant1
       end
     end
   end
-
 end

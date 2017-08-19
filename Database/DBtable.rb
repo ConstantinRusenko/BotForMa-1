@@ -10,6 +10,7 @@ class DBtable
     @username = Global.client_name
     @phone = Global.client_phone
     @order_table_time = Global.order_table_time
+    @order_table_day = Global.order_table_day
 
 
     @db = SQLite3::Database.new 'TableOrders'
@@ -20,6 +21,7 @@ class DBtable
           "restaurant" Text,
           "username" Text,
           "phone" Text,
+          "tableday" Text,
           "tabletime" Text
       )'
 
@@ -29,9 +31,10 @@ class DBtable
           restaurant,
           username,
           phone,
+          tableday,
           tabletime
       )
-      VALUES ( ?, ?, ?, ?, ?)', [@orderdate, @restaurant, @username, @phone, @order_table_time])
+      VALUES ( ?, ?, ?, ?, ?, ?)', [@orderdate, @restaurant, @username, @phone, @order_table_day, @order_table_time])
 
   end
 end

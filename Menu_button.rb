@@ -5,16 +5,6 @@ require './Getuserinfo'
 
 class Menu_button
 
-def self.user_info(message, bot)
-
-  no_but = Telegram::Bot::Types::ReplyKeyboardRemove.new(remove_keyboard: true)
-  bot.api.send_message(chat_id: message.chat.id, text: 'Привет =)', reply_markup: no_but)
-  Getuserinfo.get_client_name(message, bot)
-  bot.api.send_message(chat_id: message.chat.id, text: 'А телефончик? Тоже для заказа =)')
-  Getuserinfo.get_client_phone(message, bot)
-
-end
-
 def self.main_menu(message, bot)
 
   Global.order_cart = []
@@ -38,7 +28,7 @@ def self.main_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when '🍱Суши-бары🍣'
         Menu_button.sushi_menu(message, bot)
@@ -82,7 +72,7 @@ def self.sushi_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when 'Kovbasoff'
         Kovbasoff.menu_res(message, bot)
@@ -113,7 +103,7 @@ def self.pizza_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when '🔙Назад в меню'
         Menu_button.main_menu(message, bot)
@@ -141,7 +131,7 @@ def self.restor_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when 'Faro Del Porto'
         Farodelporto.menu_res(message, bot)
@@ -172,7 +162,7 @@ def self.cafe_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when '🔙Назад в меню'
         Menu_button.main_menu(message, bot)
@@ -200,7 +190,7 @@ def self.pub_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when 'Кофбасофф'
         Kovbasoff.menu_res(message, bot)
@@ -242,7 +232,7 @@ def self.all_menu(message, bot)
     case message.text
 
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
 
       when 'Ковбасофф'
         Kovbasoff.menu_res(message, bot)

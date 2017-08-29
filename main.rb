@@ -1,7 +1,7 @@
 require 'telegram/bot'
 require './Menu_button'
 
-token = '449940726:AAEJDu-CA2PGXqABxR_X2WgFFcHLkFxzDGQ'
+token = '438804914:AAG8VciXU5aRh9JeXYiOnO5ZCOnan6V7uco'
 
 
 module Global
@@ -16,7 +16,8 @@ module Global
                   :client_st_name,
                   :client_st_num,
                   :order_cart,
-                  :restaurant
+                  :restaurant,
+                  :order_table_month
   end
 end
 Global.order_cart = []
@@ -25,7 +26,19 @@ Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     case message.text
       when '/start'
-        Menu_button.user_info(message, bot)
+        Menu_button.main_menu(message, bot)
+
+      when "/help"
+        bot.api.send_message(chat_id: message.chat.id, text: 'Нуждаешься в помощи? Давай подскажу.
+
+⚫️Для поиска любимого заведения начни свою фразу с "где находиться". Например, где находиться Фаро дель порто?
+
+⚫️Для более подробной информации о блюде/ресторане, твоя фраза должна содержать "что такое". Например, что такое Пицца Цезарь?
+
+⚫️Или укажи название. Например, Фаро дель порто?
+
+⚫️Обязательно поставь знак вопроса! ')
+
         Global.order_table_time = nil
         Global.client_name = nil
         Global.client_phone = nil
@@ -36,3 +49,4 @@ Telegram::Bot::Client.run(token) do |bot|
     end
   end
 end
+

@@ -29,7 +29,7 @@ class Kovbasoff
 
   def self.menu_res(message, bot)
 
-    Global.restaurant = "Ковбасофф"
+    Global.restaurant = "Kovbasoff"
 
     text = 'Вы к нам или мы к вам ?'
     buttons = [
@@ -49,7 +49,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '📦Доставка🛵'
           Kovbasoff.delivery(message, bot)
@@ -91,7 +91,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Пицца'
           Kovbasoff.pizza(message, bot)
@@ -122,7 +122,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Карбонара'
           Global.order_cart.push('Карбонара')
@@ -156,7 +156,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '1'
           Global.order_quantity = '1'
@@ -243,14 +243,15 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Заказать еще'
           Kovbasoff.delivery(message, bot)
 
         when 'Оформить заказ'
-          Getuserinfo.get_client_address(message, bot)
-          Kovbasoff.order_confirmation(message, bot)
+          Getuserinfo.user_info(message, bot)
+          Getuserinfo.get_client_address(message, bot, 1)
+
 
         when 'Отменить заказ'
           Global.restaurant = nil
@@ -286,7 +287,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Принять заказ'
           DBorder.bd_input
@@ -413,7 +414,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '11:00'
 
@@ -725,7 +726,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Да'
           DBtable.bd_input
@@ -761,7 +762,7 @@ class Kovbasoff
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '❤️💜💙❤️💜'
           Kovbasoff.likes5.push('5')

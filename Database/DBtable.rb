@@ -11,6 +11,7 @@ class DBtable
     @phone = Global.client_phone
     @order_table_time = Global.order_table_time
     @order_table_day = Global.order_table_day
+    @order_table_month = Global.order_table_month
 
 
     @db = SQLite3::Database.new 'TableOrders'
@@ -22,7 +23,8 @@ class DBtable
           "username" Text,
           "phone" Text,
           "tableday" Text,
-          "tabletime" Text
+          "tabletime" Text,
+          "month" Text
       )'
 
     @db.execute( 'INSERT INTO
@@ -32,9 +34,10 @@ class DBtable
           username,
           phone,
           tableday,
-          tabletime
+          tabletime,
+          month
       )
-      VALUES ( ?, ?, ?, ?, ?, ?)', [@orderdate, @restaurant, @username, @phone, @order_table_day, @order_table_time])
+      VALUES ( ?, ?, ?, ?, ?, ?, ?)', [@orderdate, @restaurant, @username, @phone, @order_table_day, @order_table_time, @order_table_month])
 
   end
 end

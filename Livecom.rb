@@ -42,7 +42,7 @@ class Live_communication
         lable = 'Информация о баре "Ковбасофф"'
         Live_communication.buttons(message, bot, button, lable)
 
-      when "что такое фародельпорто?", "фародельпорто?", "информация о фародельпорто", "фаро дель порто", "что такое faro del porto?"
+      when "что такое фародельпорто?", "фародельпорто?", "информация о фародельпорто", "фаро дель порто", "что такое faro del porto?", "информация о faro del porto"
         button = Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Нажми меня',
           url: 'https://crabservers.herokuapp.com/html/FD7_Faro.html'

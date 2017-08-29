@@ -2,7 +2,7 @@ require './Database/DBorder'
 require './Database/DBtable'
 require './Getuserinfo'
 require './Livecom'
-
+require './Parser'
 class Farodelporto
 
   class << self
@@ -49,13 +49,13 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '📦Доставка🛵'
           Farodelporto.delivery(message, bot)
 
         when '🕯Заказать столик📝'
-          Farodelporto.order_table_day(message, bot)
+          Farodelporto.order_table_month(message, bot)
 
         when '💙Отзывы💜'
           Farodelporto.res_likes(message, bot)
@@ -77,39 +77,8 @@ class Farodelporto
     text = 'Значит заказываем =)'
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Пицца'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Паста'),
+      Telegram::Bot::Types::KeyboardButton.new(text: 'Десерты'),
       Telegram::Bot::Types::KeyboardButton.new(text: 'Напитки'),
-      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад в меню')
-    ]
-    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
-    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
-
-    bot.listen do |message|
-
-      Live_communication.list(message, bot)
-
-      case message.text
-
-        when '/start'
-          Menu_button.user_info(message, bot)
-
-        when 'Пицца'
-          Farodelporto.pizza(message, bot)
-
-        when '🔙Назад в меню'
-          Menu_button.main_menu(message, bot)
-
-      end
-    end
-  end
-
-  def self.pizza(message, bot)
-
-    text = 'Ууу піцца, вкусняшка'
-    buttons = [
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Карбонара'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Диаволла'),
-      Telegram::Bot::Types::KeyboardButton.new(text: 'Салями'),
       Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
     ]
     markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
@@ -122,11 +91,125 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
-        when 'Карбонара'
-          Global.order_cart.push('Карбонара')
+        when 'Пицца'
+          Parser.faro_del_porto_pizza(message, bot)
+
+        when 'Десерты'
+          Parser.faro_del_porto_desserts(message, bot)
+
+        when 'Напитки'
+          Parser.faro_del_porto_drinks(message, bot)
+
+
+        when '🔙Назад'
+          Farodelporto.menu_res(message, bot)
+
+      end
+    end
+  end
+
+  def self.pizza(message, bot, buttons)
+
+    text = 'Ууу піцца, вкусняшка'
+
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+      case message.text
+
+        when '/start'
+          Menu_button.main_menu(message, bot)
+
+        when 'Пицца "Цезарь"'
+          Global.order_cart.push('Цезарь')
           Farodelporto.pizza_quantity(message, bot)
+
+        when 'Пицца "Гарибальди"'
+          Global.order_cart.push('Гарибальди')
+          Farodelporto.pizza_quantity(message, bot)
+
+        when 'Пицца "Кватро Формаджи"'
+          Global.order_cart.push('Кватро Формаджи')
+          Farodelporto.pizza_quantity(message, bot)
+
+
+        when '🔙Назад в меню'
+          Farodelporto.delivery(message, bot)
+
+      end
+    end
+  end
+
+  def self.desserts(message, bot, buttons)
+
+    text = 'Ууу сладенькое, вкусняшка'
+
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+      case message.text
+
+        when '/start'
+          Menu_button.main_menu(message, bot)
+
+        when 'Десерт "Лимончелла"'
+          Global.order_cart.push('Лимончелла')
+          Farodelporto.pizza_quantity(message, bot)
+
+        when 'Десерт "Чернично-арахисовый"'
+          Global.order_cart.push('Гарибальди')
+          Farodelporto.pizza_quantity(message, bot)
+
+        when 'Десерт "Яблочный тартатен"'
+          Global.order_cart.push('Яблочный тартатен')
+          Farodelporto.pizza_quantity(message, bot)
+
+
+        when '🔙Назад'
+          Farodelporto.delivery(message, bot)
+
+      end
+    end
+  end
+
+  def self.drinks(message, bot, buttons)
+
+    text = 'Ууу сладенькое, вкусняшка'
+
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+      case message.text
+
+        when '/start'
+          Menu_button.main_menu(message, bot)
+
+        when 'Вода "Borjomi"'
+          Global.order_cart.push('Borjomi')
+          Farodelporto.pizza_quantity(message, bot)
+
+        when 'Вода "Моршинская"'
+          Global.order_cart.push('Моршинська')
+          Farodelporto.pizza_quantity(message, bot)
+
+        when 'Сок "Sandora" в ассортименте'
+          Global.order_cart.push('Sandora')
+          Farodelporto.pizza_quantity(message, bot)
+
 
         when '🔙Назад'
           Farodelporto.delivery(message, bot)
@@ -156,7 +239,7 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '1'
           Global.order_quantity = '1'
@@ -219,7 +302,7 @@ class Farodelporto
           Farodelporto.last_step(message, bot)
 
         when '🔙Назад'
-          Farodelporto.pizza(message, bot)
+          Farodelporto.delivery(message, bot)
 
       end
     end
@@ -243,14 +326,15 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Заказать еще'
           Farodelporto.delivery(message, bot)
 
         when 'Оформить заказ'
-          Getuserinfo.get_client_address(message, bot)
-          Farodelporto.order_confirmation(message, bot)
+          Getuserinfo.user_info(message, bot)
+          Getuserinfo.get_client_address(message, bot, 0)
+
 
         when 'Отменить заказ'
           Global.restaurant = nil
@@ -286,7 +370,7 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Принять заказ'
           DBorder.bd_input
@@ -298,6 +382,41 @@ class Farodelporto
           Global.order_quantity = nil
           Global.order_cart = nil
           Menu_button.main_menu(message, bot)
+
+      end
+    end
+  end
+
+  def self.order_table_month(message, bot)
+
+    text = 'Выберите месяц'
+    buttons = [
+      Telegram::Bot::Types::KeyboardButton.new(text: 'Август'),
+      Telegram::Bot::Types::KeyboardButton.new(text: 'Сентябрь'),
+      Telegram::Bot::Types::KeyboardButton.new(text: '🔙Назад')
+    ]
+    markup = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: buttons, one_time_keyboard: true, resize_keyboard: true)
+    bot.api.send_message(chat_id: message.chat.id, text: "#{text}", reply_markup: markup)
+
+    bot.listen do |message|
+
+      Live_communication.list(message, bot)
+
+      case message.text
+
+        when '/start'
+          Menu_button.main_menu(message, bot)
+
+        when 'Август'
+          Global.order_table_month = 'Август'
+          Farodelporto.order_table_day(message, bot)
+
+        when 'Сентябрь'
+          Global.order_table_month = 'Сентябрь'
+          Farodelporto.order_table_day(message, bot)
+
+        when '🔙Назад'
+          Farodelporto.delivery(message, bot)
 
       end
     end
@@ -413,7 +532,7 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '11:00'
 
@@ -710,7 +829,7 @@ class Farodelporto
 
   def self.time_confirmation(message, bot)
 
-    text = "На #{Global.order_table_day} число #{Global.order_table_time} ?"
+    text = "На месяц #{Global.order_table_month}, день #{Global.order_table_day}, число #{Global.order_table_time} ?"
     buttons = [
       Telegram::Bot::Types::KeyboardButton.new(text: 'Да'),
       Telegram::Bot::Types::KeyboardButton.new(text: 'Нет')
@@ -725,9 +844,12 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when 'Да'
+          Getuserinfo.get_client_name(message, bot)
+          bot.api.send_message(chat_id: message.chat.id, text: 'Введите пожалуйста ваш номер, для заказа столика =)')
+          Getuserinfo.get_client_phone(message, bot)
           DBtable.bd_input
           bot.api.send_message(chat_id: message.chat.id, text: "Ваш столик ждет вас на #{Global.order_table_time} и мы тоже =)", reply_markup: markup)
           Menu_button.stop_button(message, bot)
@@ -761,7 +883,7 @@ class Farodelporto
       case message.text
 
         when '/start'
-          Menu_button.user_info(message, bot)
+          Menu_button.main_menu(message, bot)
 
         when '❤️💜💙❤️💜'
           Farodelporto.likes5.push('5')
